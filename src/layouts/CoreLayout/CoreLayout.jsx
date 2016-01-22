@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 
 // CSS
 // ===
-import '../../styles/core.scss'
+import 'foundation-sites/dist/foundation.css'
+import 'styles/core.scss'
 
 // Actions
 // =======

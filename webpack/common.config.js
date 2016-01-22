@@ -1,6 +1,4 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
-const postcssImport = require('postcss-import');
 const merge = require('webpack-merge');
 
 const development = require('./dev.config.js');
@@ -57,24 +55,16 @@ const common = {
       loaders: ['babel-loader'],
       exclude: /node_modules/,
     }, {
+      test: /\.css$/,
+      loader: 'style!css?localIdentName=[path][name]--[local]'
+    }, {
       test: /\.png$/,
       loader: 'file?name=[name].[ext]',
     }, {
       test: /\.jpg$/,
       loader: 'file?name=[name].[ext]',
     }],
-  },
-
-  postcss: (webpack) => {
-    return [
-      autoprefixer({
-        browsers: ['last 2 versions'],
-      }),
-      postcssImport({
-        addDependencyTo: webpack,
-      }),
-    ];
-  },
+  }
 };
 
 if (TARGET === 'start' || !TARGET) {

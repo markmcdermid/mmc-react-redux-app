@@ -3,15 +3,19 @@ import { syncHistory } from 'redux-simple-router'
 import thunk from 'redux-thunk'
 import rootReducer from './rootReducer'
 
-export default function configureStore ({ initialState = {}, history }) {
+export default function configureStore (history) {
   // Sync with router via history instance (main.js)
   const routerMiddleware = syncHistory(history)
 
   // Compose final middleware
   let middleware = applyMiddleware(thunk, routerMiddleware)
 
+  const finalCreateStore = compose(
+    applyMiddleware(thunk, routerMiddleware),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )(createStore)
   // Create final store and subscribe router
-  const store = middleware(createStore)(rootReducer, initialState)
+  const store = finalCreateStore(rootReducer)
 
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {
