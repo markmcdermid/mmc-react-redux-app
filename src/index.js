@@ -1,23 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router, Redirect, useRouterHistory } from 'react-router';
-import { createHashHistory } from 'history';
-import { syncReduxAndRouter } from 'redux-simple-router';
-import configureStore from './store/configureStore';
-import routes from './routes';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { useRouterHistory } from 'react-router'
+import { createHistory } from 'history'
+import getRoutes from 'routes'
+import Root from './containers/Root'
+import configureStore from './redux/configureStore'
 
-const history = useRouterHistory(createHashHistory)({ queryKey: false });
-const store = configureStore();
+import { fetchPostsIfNeeded } from 'redux/modules/reddit'
 
-syncReduxAndRouter(history, store);
+const historyConfig = { basename: __BASENAME__ }
+const history = useRouterHistory(createHistory)(historyConfig)
 
+const initialState = window.__INITIAL_STATE__
+const store = configureStore({ initialState, history })
+
+store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
+  console.log(store.getState())
+)
+
+// Render the React application to the DOM
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Redirect from="/" to="home" />
-      {routes}
-    </Router>
-  </Provider>,
-  document.getElementById('root')
-);
+    <Root history={history} routes={getRoutes(store)} store={store} />,
+    document.getElementById('root')
+ )
