@@ -12,9 +12,10 @@
         color: white;
     }
 }
+
 .page-container {
-    background-image: linear-gradient(to bottom right,rgba(0, 0, 0, 0),rgba(121, 189, 243, 0.6) 75%);
-    background-color: #8490A6;
+    background-image: linear-gradient(to bottom right,rgba(121, 189, 243, 0.6),rgba(0, 0, 0, 0) 100%);
+    background-color: rgb(166, 132, 132);
     height: 100%;
     overflow: auto;
 }
