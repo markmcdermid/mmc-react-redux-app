@@ -12,7 +12,7 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 // Action Creators
 // ===============
 export const selectSubreddit = createAction(SELECT_SUBREDDIT)
-export const invalidateSubreddit = createAction(INVALIDATE_SUBREDDIT)
+export const invalidateSubreddit = createAction(INVALIDATE_SUBREDDIT, (subreddit) => ({ subreddit }))
 export const requestPosts = createAction(REQUEST_POSTS, (subreddit) => ({ subreddit }))
 export const receivePosts = createAction(RECEIVE_POSTS, (subreddit, json) =>
   ({

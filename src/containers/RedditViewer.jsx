@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as redditActions } from 'redux/modules/reddit'
-import _ from 'lodash'
 import Posts from 'components/RedditViewer/RedditPosts'
+import ChangeSubreddit from 'components/RedditViewer/ChangeSubreddit'
 
 const mapStateToProps = (state) => {
   // Sort the state in to a nice object to pass to props
@@ -20,32 +20,41 @@ const mapStateToProps = (state) => {
 export default class RedditViewer extends Component {
 
   componentDidMount() {
-      const { fetchPostsIfNeeded, selectedSubreddit } = this.props
+    const { fetchPostsIfNeeded, selectedSubreddit } = this.props
+    fetchPostsIfNeeded(selectedSubreddit)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedSubreddit !== this.props.selectedSubreddit) {
+      const { fetchPostsIfNeeded, selectedSubreddit } = nextProps
       fetchPostsIfNeeded(selectedSubreddit)
     }
+  }
 
-    componentWillReceiveProps(nextProps) {
-      if (nextProps.selectedSubreddit !== this.props.selectedSubreddit) {
-        const { fetchPostsIfNeeded, selectedSubreddit } = nextProps
-        fetchPostsIfNeeded(selectedSubreddit)
-      }
-    }
+  handleRefreshClick (e) {
+    e.preventDefault()
+    const { selectedSubreddit, invalidateSubreddit, fetchPostsIfNeeded } = this.props
+    invalidateSubreddit(selectedSubreddit)
+    fetchPostsIfNeeded(selectedSubreddit)
+  }
 
   render () {
-    const { posts, selectedSubreddit, isFetching, lastUpdated } = this.props
-    let lastUpdatedTime = lastUpdated ? (Date.now() - lastUpdated) / 1000 : lastUpdated
+    const { posts, selectedSubreddit, selectSubreddit, isFetching, lastUpdated } = this.props
+    const LastUpdated = <div className="lastUpdated">Cached: <i className='fa fa-clock-o' /> {new Date(lastUpdated).toLocaleTimeString()}</div>
     return(
       <div className='redditViewer'>
-        <h3>Reddit</h3>
-        {isFetching && 'Loading...'}
-        {lastUpdated &&
-          <span>
-            Last updated  {lastUpdatedTime}s ago.
-            {' '}
-          </span>
-        }
-        {posts && <Posts posts={posts} />}
+      <h3><span className="preSubreddit">r/</span>{selectedSubreddit}</h3>
+      <div className='topRight'>
+        <i
+          className={isFetching ? 'fa fa-cog fa-spin' : 'fa fa-refresh'}
+          onClick={this.handleRefreshClick.bind(this)}
+        />
       </div>
-    )
+
+      {lastUpdated && LastUpdated}
+      <ChangeSubreddit selectSubreddit={selectSubreddit} />
+      {posts && <Posts posts={posts} />}
+      </div>
+      )
   }
 }

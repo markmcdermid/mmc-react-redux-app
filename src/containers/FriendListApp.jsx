@@ -21,7 +21,7 @@ class FriendListApp extends Component {
   render () {
     const { addFriend, filterFriends, friendList: { starFilter } } = this.props
     return (
-      <div className='friendListApp'>
+      <div className={starFilter ? 'starred' : ''}>
         <h3>Friends</h3>
         <AddFriend addFriend={addFriend} />
         <FriendList {...this.props} />

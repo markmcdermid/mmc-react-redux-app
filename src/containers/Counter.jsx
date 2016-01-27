@@ -27,10 +27,10 @@ class Counter extends Component {
     const { counter } = this.props
     return (
       <div>
-        <h2>
+        <h3>
           Counter:{' '}
           <span className='counter'>{counter}</span>
-        </h2>
+        </h3>
         <button className='button'
             onClick={this.handleIncrement.bind(this)}>
           Increment

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 class ChangeReddit extends Component {
   static propTypes = {
-    changeSubreddit: PropTypes.func.isRequired
+    selectSubreddit: PropTypes.func.isRequired
   };
   constructor (props, context) {
     super(props, context)
@@ -13,6 +13,7 @@ class ChangeReddit extends Component {
   render () {
     return (
       <input
+        className='moduleInput'
         type='text'
         value={this.state.subreddit}
         placeholder='Change Subreddit...'
@@ -26,9 +27,10 @@ class ChangeReddit extends Component {
     this.setState({ subreddit: e.target.value })
   }
   handleSubmit (e) {
+    const {selectSubreddit} = this.props
     let subreddit = e.target.value.trim()
     if (e.which === 13) {
-      this.props.changeSubreddit(subreddit)
+      selectSubreddit(subreddit)
       this.setState({ subreddit: '' })
     }
   }

@@ -1,13 +1,21 @@
 .redditViewer {
-    text-align: left;
-    background-color: white;
+    .topRight {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+
+    .lastUpdated {
+        color: grey;
+        font-size:0.8rem;
+    }
+
+    .preSubreddit {
+        color: grey;
+    }
 
     a {
         color: inherit;
-    }
-
-    h3 {
-        padding: 0.5rem 0.5rem 0;
     }
 
     ul {
@@ -52,7 +60,6 @@
                 width:100%;
                 font-size: 0.86rem;
                 line-height: 1.2rem;
-                padding-left: 5px;
                 .title {
                     display: block;
                 }
@@ -60,7 +67,7 @@
 
             .metaSub {
                 font-size: 0.7rem;
-                color: #aaa;
+                color: #999;
 
                 span {
                     margin-right: 0.2rem;
@@ -82,7 +89,7 @@
             width:15%;
 
             .metaMain {
-                color: #aaa;
+                color: #999;
                 font-size:0.5rem;
                 text-align:center;
                 border-left: 1px rgba(0,0,0,0.08) dotted;
