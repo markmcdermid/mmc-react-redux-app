@@ -25,7 +25,6 @@ class CoreLayout extends Component {
 
   componentWillReceiveProps (nextProps) {
     // When auth props change checks if logging in or out.
-    console.log('Core will receive props')
     if (!this.props.loggedIn && nextProps.loggedIn) {
       // login
       this.props.push('/dashboard')
