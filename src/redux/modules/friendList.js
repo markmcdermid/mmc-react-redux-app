@@ -30,7 +30,7 @@ export const actions = {
 const initialState = [
   {
     id: 1,
-    name: 'Emma Sharpe',
+    name: 'Alex Burton',
     starred: true
   }, {
     id: 2,

@@ -4,23 +4,29 @@ import fetch from 'isomorphic-fetch'
 
 // Constants
 // =========
-export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
-export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT';
+export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT';
+export const REQUEST_POSTS = 'REQUEST_POSTS';
+export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 
 // Action Creators
 // ===============
-export const selectSubreddit = createAction(SELECT_SUBREDDIT)
-export const invalidateSubreddit = createAction(INVALIDATE_SUBREDDIT, (subreddit) => ({ subreddit }))
-export const requestPosts = createAction(REQUEST_POSTS, (subreddit) => ({ subreddit }))
-export const receivePosts = createAction(RECEIVE_POSTS, (subreddit, json) =>
-  ({
-    subreddit,
+export const selectSubreddit = createAction(SELECT_SUBREDDIT);
+export const invalidateSubreddit = createAction(INVALIDATE_SUBREDDIT, function (subreddit) {
+  return { subreddit };
+});
+export const requestPosts = createAction(REQUEST_POSTS, function (subreddit) {
+  return { subreddit: subreddit };
+});
+export const receivePosts = createAction(RECEIVE_POSTS, function(subreddit, json) {
+  return {
+    subreddit: subreddit,
     posts: json.data.children.map(child => child.data),
     receivedAt: Date.now()
-  })
-)
+  };
+});
+
+
 
 // Thunks
 const fetchPosts = (subreddit) => {

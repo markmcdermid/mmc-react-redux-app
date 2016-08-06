@@ -15,22 +15,21 @@ class FriendListApp extends Component {
     deleteFriend: PropTypes.func.isRequired,
     starFriend: PropTypes.func.isRequired,
     filterFriends: PropTypes.func.isRequired,
-
     friendList: PropTypes.object.isRequired
   };
   render () {
     const { addFriend, filterFriends, friendList: { starFilter } } = this.props
     return (
-      <div className={starFilter ? 'starred' : ''}>
+      <div className={starFilter ? 'starred friendList' : 'friendList'}>
         <h3>Friends</h3>
         <AddFriend addFriend={addFriend} />
         <FriendList {...this.props} />
         <FriendFilter
           starFilter={starFilter}
           filterFriends={filterFriends}
-         />
+        />
       </div>
-    )
+    );
   }
 }
 
